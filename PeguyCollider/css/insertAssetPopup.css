@@ -1,0 +1,87 @@
+.insert-asset-popup .insertSettingsPanel
+{
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 40px;
+	margin-bottom: 20px;
+}
+
+.insert-asset-popup .preview svg
+{
+	max-width: 300px;
+	max-height: 300px;
+	border: solid 1px rgb(0, 0, 0);
+	border-radius: 3px;
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4);
+	cursor: pointer;
+	margin: 3px;
+}
+
+.insert-asset-popup p
+{
+	text-align: left;
+}
+
+/*
+.insert-asset-popup .keywordsDisplay
+{
+	max-width: 300px;
+	margin-bottom: 10px;
+}
+
+.insert-asset-popup .keywordsDisplay .labelList
+{
+	white-space: break-spaces !important;
+	max-width: 300px;
+}
+
+.insert-asset-popup .keywordsInput 
+{
+	width: 284px;
+	min-width: 284px;
+	max-width: 284px;
+}
+
+.insert-asset-popup textarea
+{
+	width: 300px;
+	min-width: 300px;
+	max-width: 300px;
+	min-height: 100px;
+	margin-bottom: 20px;
+}
+*/
+
+.insert-asset-popup .elementsList
+{
+	display: inline-block;
+	vertical-align: middle;
+	border: solid 1px rgb(223, 223, 223);
+}
+
+.insert-asset-popup .elementsList .assetRow *
+{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.insert-asset-popup .elementsList .assetRow .preview
+{
+	margin-right: 10px;
+}
+
+.insert-asset-popup .elementsList .assetRow svg
+{
+	max-width: 25px;
+	min-width: 25px;
+	border: solid 1px rgb(0, 0, 0);
+	border-radius: 3px;
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.4);
+	cursor: pointer;
+	margin: 3px;
+}
+
+.insert-asset-popup .elementsList .selected
+{
+	background-color: rgb(80, 80, 80);
+}
