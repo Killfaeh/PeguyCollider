@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		
+		<!-- Désactiver les comportements natifs indésirables des mobiles -->
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, minimum-scale=1" />
+		<meta name="viewport" content="width=device-width, maximum-scale=1" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name=“viewport” content=”initial-scale=1, viewport-fit=cover”>
+		
+		<title>Peguy Collider</title>
+		
+		<!-- Style de la page HTML affichée pendant le chargement du framework et autres contenus, à adapter selon les besoins -->
+		<style>
+			
+			#main, #screen
+			{
+				position: absolute;
+				left: 0px;
+				right: 0px;
+				top: 0px;
+				bottom: 0px;
+				
+				overflow: hidden;
+				
+				margin: 0px;
+				padding: 0px;
+				
+				text-align: center;
+				font-family: Arial;
+			}
+			
+			#loadingScreen
+			{
+				z-index: 100000000;
+				position: absolute;
+				left: 0px;
+				right: 0px;
+				top: 0px;
+				bottom: 0px;
+				background-color: rgba(255, 255, 255, 0.8);
+				-webkit-backdrop-filter: blur(1px);
+				backdrop-filter: blur(1px);
+				text-align: center;
+				white-space: nowrap;
+				display: none;
+			}
+			
+			#loadingScreen > div
+			{
+				display: inline-block;
+				vertical-align: middle;
+			}
+			
+			#loadingGif
+			{
+				width: 250px;
+			}
+			
+		</style>
+		
+		<link type="text/css" rel="stylesheet" media="all" href="js/highlight/styles/atom-one-dark-reasonable.min.css"></link>
+		<script src="js/highlight/highlight.min.js"></script>
+		<script>if (typeof hljs !== 'undefined') { hljs.initHighlightingOnLoad(); }</script>
+		<script type="text/javascript" src="js/tone.15.0.4.js"></script>
+		
+	</head>
+	
+	<!-- Racine du DOM, la présence de l'id "main" est obligatoire -->
+	<body id="main">
+
+		<!-- Zone d'écran principal de l'application, la présence de l'id "screen" est obligatoire -->
+		<div id="screen">
+			<p>Loading...</p>
+		</div>
+		
+		<!-- Chargement du Loader qui permet d'initialiser le framework ensuite -->
+		<script src='PeguyJS/Loader.js?token=0' ></script>
+		
+		<script>
+
+			function delay(milliseconds)
+			{
+				return new Promise(resolve => { setTimeout(resolve, milliseconds); });
+			}
+
+			var consoleLog = console.log;
+
+			console.log = function($message)
+			{
+				consoleLog($message);
+
+				try
+				{
+					pythonObject.logJS($message);
+				}
+				catch ($exception)
+				{
+					//consoleLog("No Python");
+				}
+			};
+
+			var appData;
+			var viewManager;
+			var notifCenter;
+			var progressBar;
+
+			var loadScript = function($scriptName)
+			{
+				/*
+				var codeToExec = '';
+
+				if (utils.isset(viewManager))
+					codeToExec = viewManager.loadScript($scriptName);
+
+				return codeToExec;
+				//*/
+
+				console.log("Script inexistant");
+			};
+			
+			var updateProgressBar = function($progress)
+			{
+				progressBar.setCurrentValue($progress);
+				//var message = '<p style="text-align: left;" >Progress : ' + $progress + '%</p>';
+				//notifCenter.push(message, false);
+			};
+			
+			/*
+			var save3DFinished = function($fileName)
+			{
+				document.getElementById('loadingScreen').style.display = 'none';
+				var message = '<p style="text-align: left;" >The file "' + $fileName + '" has been generated.</p>';
+				notifCenter.push(message, false);
+			};
+			//*/
+
+			// Instanciation du Loader
+			var Loader = new Loader('', 'Peguy');
+			
+			Loader.addModules(['math', 'codeEditor']);
+			
+			Loader.addStyle('css/global.css', 'global');
+			
+			Loader.addScript('js/ViewManager.js?token=' + Loader.getToken(), 'viewManager');
+			Loader.addScript('js/notes/Note.js?token=' + Loader.getToken(), 'note');
+			Loader.addScript('js/notes/Chord.js?token=' + Loader.getToken(), 'chord');
+			Loader.addScript('js/notes/Arpeggio.js?token=' + Loader.getToken(), 'arpeggio');
+			Loader.addScript('js/notes/Melodies.js?token=' + Loader.getToken(), 'melodies');
+			Loader.addScript('js/instruments/Instrument.js?token=' + Loader.getToken(), 'instrument');
+			Loader.addScript('js/instruments/Synth.js?token=' + Loader.getToken(), 'synth');
+			Loader.addScript('js/instruments/MonoSynth.js?token=' + Loader.getToken(), 'monoSynth');
+			Loader.addScript('js/instruments/FMSynth.js?token=' + Loader.getToken(), 'fmSynth');
+			Loader.addScript('js/instruments/AMSynth.js?token=' + Loader.getToken(), 'amSynth');
+			Loader.addScript('js/instruments/DuoSynth.js?token=' + Loader.getToken(), 'duoSynth');
+			Loader.addScript('js/instruments/MembraneSynth.js?token=' + Loader.getToken(), 'membraneSynth');
+			Loader.addScript('js/instruments/MetalSynth.js?token=' + Loader.getToken(), 'metalSynth');
+			Loader.addScript('js/instruments/NoiseSynth.js?token=' + Loader.getToken(), 'noiseSynth');
+			Loader.addScript('js/instruments/PluckSynth.js?token=' + Loader.getToken(), 'pluckSynth');
+			Loader.addScript('js/instruments/Sampler.js?token=' + Loader.getToken(), 'sampler');
+			Loader.addScript('js/instruments/Piano.js?token=' + Loader.getToken(), 'piano');
+			Loader.addScript('js/instruments/SteinwayGrandPiano.js?token=' + Loader.getToken(), 'steinwayGrandPiano');
+			Loader.addScript('js/instruments/ClassicElectricPiano.js?token=' + Loader.getToken(), 'classicElectricPiano');
+			Loader.addScript('js/instruments/DeepOrgan.js?token=' + Loader.getToken(), 'deepOrgan');
+			Loader.addScript('js/Sequence.js?token=' + Loader.getToken(), 'sequence');
+			Loader.addScript('js/Document.js?token=' + Loader.getToken(), 'document');
+			
+			Loader.addComponent('css/docGrid.css', 'js/DocGrid.js', 'docGrid');
+			Loader.addComponent('css/appGrid.css', 'js/AppGrid.js', 'appGrid');
+			Loader.addComponent('css/quickCodePanel.css', 'js/QuickCodePanel.js', 'quickCodePanel');
+			Loader.addComponent('css/buttonsPanel.css', 'js/ButtonsPanel.js', 'buttonsPanel');
+			Loader.addComponent('css/helpPopup.css', 'js/HelpPopup.js', 'helpPopup');
+			//Loader.addComponent('css/vectorialAssetsManager.css', 'js/VectorialAssetsManager.js', 'vectorialsAssetsManager');
+			//Loader.addComponent('css/editAssetPopup.css', 'js/EditAssetPopup.js', 'editAssetPopup');
+			//Loader.addComponent('css/insertAssetPopup.css', 'js/insertAssetPopup.js', 'insertAssetPopup');
+			
+			// Redéfinir la fonction this.onload
+			Loader.onload = function()
+			{ 
+				Debug.consoleKey = 'Escape';
+				
+				Debug.onError = function($message, $source, $lineno, $colno, $error)
+				{
+					//cancelSave3D();
+					
+				};
+				
+				viewManager = new ViewManager();
+				viewManager.init();
+				viewManager.resize();
+				document.getElementById('main').appendChild(viewManager);
+				viewManager.focus();
+				
+				document.getElementById('main').onDrop = function($event) { Events.emit('onDropFiles', [$event]); };
+				
+				notifCenter = new NotificationsManager();
+				document.getElementById('main').appendChild(notifCenter);
+				
+				progressBar = new ProgressBar(0);
+				//document.getElementById('loadingGif').removeAllChildren();
+				//document.getElementById('loadingGif').appendChild(progressBar);
+
+				Events.onResize = function() { viewManager.resize(); };
+			}; 
+			
+			// On ne lance le chargement du framework que lorsque la page HTML qui héberge l'application a fini de charger
+			window.onload = function()
+			{
+				Loader.load();
+			}; 
+
+			//window.electronAPI.setTitle("POUET ! ");
+
+		</script>
+		
+	</body>
+</html>
