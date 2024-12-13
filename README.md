@@ -72,7 +72,7 @@ Run PeguyCollider in a terminal.
 Here is how looks the interface.</br>
 
 <div align="center">
-<img src="./demos/quickStartDemoScreenshot.png">
+<img src="./demos/screenshot.png">
 </div></br>
 
 A Péguy Collider project is a directory containing a file named project.json and a file named main.js. 
@@ -108,3 +108,15 @@ Then, to use others scripts in the project call them with the instruction loadSc
 </div></br>
 
 ### Export to MIDI and other DAW
+
+To save the generated melody in a MIDI file use the instruction Sequence.saveAsMIDI('path/to/file.mid'); at the end of your program.</br>
+
+<div align="center">
+<img src="./doc/05-includeScript.png">
+</div></br>
+
+Then you can importe the MIDI file in your favorite DAW (here GarageBand) and choose an instrument for each channel.
+
+<div align="center">
+<img src="./demos/GarageBandScreenshot.png">
+</div></br>
