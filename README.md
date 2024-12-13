@@ -53,12 +53,12 @@ Archive content
 
 **Windows**
 
-If you run Péguy Editor for the first time, run install.bat (double clic).</br>
-Then, run PeguyCollider.bat (double clic).
+If you run Péguy Editor for the first time, run install.bat (double click).</br>
+Then, run PeguyCollider.bat (double click).
 
 **Mac OS**
 
-Run PeguyCollider.app (double clic).</br>
+Run PeguyCollider.app (double click).</br>
 You can put PeguyCollider.app in your dock.
 
 **Linux**
