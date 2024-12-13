@@ -1,5 +1,5 @@
 # Péguy Collider
-Péguy Collider is a music procedural generation software based on [Electron](https://www.electronjs.org/), [Péguy.js](https://github.com/Killfaeh/Peguy.js) and [Tone.js](https://github.com/Tonejs/Tone.js) inspired by [Super Collider](https://supercollider.github.io/) in some way.</br>
+Péguy Collider is a music procedural generation software based on [Electron](https://www.electronjs.org/), [Péguy.js](https://github.com/Killfaeh/Peguy.js) and [Tone.js](https://github.com/Tonejs/Tone.js) inspired by [SuperCollider](https://supercollider.github.io/) in some way.</br>
 
 You can use it to generate and export melodies to use them in your favorite DAW or to edit and play generated music live.
 
