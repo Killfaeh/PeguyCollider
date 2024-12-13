@@ -84,15 +84,14 @@ You can edit your program the same time music is played and click on the refresh
 When Peguy Collider has finished playing the current iteration of the old loop, it moves on to the new one. 
 So, you can use Péguy Collider live, like a traditional instrument.</br>
 
-The quick code panel at right help you to write your code faster. 
-Double click on the label or simple click on the copy/paste icon of the row which interests you and a code block will be pasted in your code.</br>
-
-To add a script in your project, you have to click on the add file icon on the left top, near the double arrow. </br>
-
 <div align="center">
 <img src="./doc/02-playing.png">
 </div></br>
 
+The quick code panel at right help you to write your code faster. 
+Double click on the label or simple click on the copy/paste icon of the row which interests you and a code block will be pasted in your code.</br>
+
+To add a script in your project, you have to click on the add file icon on the left top, near the double arrow. </br>
 Then, enter a name and click on the Ok button.</br>
 
 A common use of the multiscript approach is to create all instruments used in the project and store them appart.</br>
