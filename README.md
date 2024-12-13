@@ -3,6 +3,11 @@ Péguy Collider is a music procedural generation software based on [Electron](ht
 
 You can use it to generate and export melodies to use them in your favorite DAW or to edit and play generated music live.
 
+## Table of Contents
+
+1. [Installation](#installation)
+2. [How to use](#how-to-use)
+
 ## Installation
 
 ### Install Node.js
