@@ -90,7 +90,7 @@ Double click on the label or simple click on the copy/paste icon of the row whic
 To add a script in your project, you have to click on the add file icon on the left top, near the double arrow. </br>
 
 <div align="center">
-<img src="./doc/02-addScript.png">
+<img src="./doc/02-playing.png">
 </div></br>
 
 Then, enter a name and click on the Ok button.</br>
@@ -98,13 +98,13 @@ Then, enter a name and click on the Ok button.</br>
 A common use of the multiscript approach is to create all instruments used in the project and store them appart.</br>
 
 <div align="center">
-<img src="./doc/04-materialsScript.png">
+<img src="./doc/03-addScript.png">
 </div></br>
 
 Then, to use others scripts in the project call them with the instruction loadScript('name-of-the-script'); for each additional script in the main script.</br>
 
 <div align="center">
-<img src="./doc/05-includeScript.png">
+<img src="./doc/04-loadScript.png">
 </div></br>
 
 ### Export to MIDI and other DAW
@@ -112,7 +112,7 @@ Then, to use others scripts in the project call them with the instruction loadSc
 To save the generated melody in a MIDI file use the instruction Sequence.saveAsMIDI('path/to/file.mid'); at the end of your program.</br>
 
 <div align="center">
-<img src="./doc/05-includeScript.png">
+<img src="./doc/05-exportToMIDI.png">
 </div></br>
 
 Then you can importe the MIDI file in your favorite DAW (here GarageBand) and choose an instrument for each channel.
