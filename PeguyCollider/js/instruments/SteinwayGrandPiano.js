@@ -1,8 +1,13 @@
-function SteinwayGrandPiano()
+function SteinwayGrandPiano($defaultVelocity)
 {
 	///////////////
 	// Attributs //
 	///////////////
+
+	var defaultVelocity = $defaultVelocity;
+
+	if (!utils.isset(defaultVelocity))
+		defaultVelocity = 0.5;
 
 	var instrument = new Sampler('instruments/SteinwayGrandPiano/', 
 									{
@@ -15,7 +20,7 @@ function SteinwayGrandPiano()
 										C6: "C6.mp3",
 										C7: "C7.mp3",
 										C8: "C8.mp3",
-									}, 0.5);
+									}, defaultVelocity);
 
 	//////////////
 	// Méthodes //

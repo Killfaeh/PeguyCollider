@@ -1,8 +1,13 @@
-function Piano()
+function Piano($defaultVelocity)
 {
 	///////////////
 	// Attributs //
 	///////////////
+
+	var defaultVelocity = $defaultVelocity;
+
+	if (!utils.isset(defaultVelocity))
+		defaultVelocity = 1.0;
 
 	var instrument = new Sampler('instruments/piano/', 
 									{
@@ -10,7 +15,7 @@ function Piano()
 										"D#4": "Ds4.mp3",
 										"F#4": "Fs4.mp3",
 										A4: "A4.mp3",
-									}, 1.0);
+									}, defaultVelocity);
 
 	//////////////
 	// Méthodes //
