@@ -58,17 +58,19 @@ Archive content
 
 **Windows**
 
-If you run Péguy Editor for the first time, run install.bat (double click). 
+If you run Péguy Collider for the first time, run install.bat as administrator. 
 A DOS console appears, with a small rotating bar in the top left corner, then disappears when installation is complete.</br>
-Then, run PeguyCollider.bat (double click).
+Then, run PeguyCollider.bat as administrator.
 
 **Mac OS**
 
-Run PeguyCollider.app (double click).</br>
+If you run Péguy Collider for the first time, run Install.app (double clic). 
+Run PeguyCollider.app (double clic).</br>
 You can put PeguyCollider.app in your dock.
 
 **Linux**
 
+If you run Péguy Collider for the first time, run Install in a console. 
 Run PeguyCollider in a console.
 
 ## How to use
