@@ -64,13 +64,13 @@ Then, run PeguyCollider.bat as administrator.
 
 **Mac OS**
 
-If you run Péguy Collider for the first time, run Install.app (double clic). 
+If you run Péguy Collider for the first time, run Install.app (double clic). </br>
 Run PeguyCollider.app (double clic).</br>
 You can put PeguyCollider.app in your dock.
 
 **Linux**
 
-If you run Péguy Collider for the first time, run Install in a console. 
+If you run Péguy Collider for the first time, run Install in a console. </br>
 Run PeguyCollider in a console.
 
 ## How to use
