@@ -83,6 +83,7 @@ var isNotSavedFiles = false;
 var recentFiles = { recentFiles: [] };
 var vectorialAssets = { assets: [] };
 var threeDAssets = { assets: [] };
+var plugIns = [];
 
 ///////////////
 // Fonctions //
@@ -117,8 +118,34 @@ function handleSetNotSavedFiles($event, $isNotSavedFiles)
 async function handleLoadSettingsInGUI()
 {
 	mainWindow.webContents.executeJavaScript("viewManager.updateRecentFiles(" + JSON.stringify(recentFiles) + ");");
+	mainWindow.webContents.executeJavaScript("viewManager.updatePlugIns(" + JSON.stringify({ plugIns: plugIns }) + ");");
 	//mainWindow.webContents.executeJavaScript("viewManager.updateVectorialAssetManager(" + JSON.stringify(vectorialAssets) + ");");
 	//mainWindow.webContents.executeJavaScript("viewManager.update3dAssetManager(" + JSON.stringify(threeDAssets) + ");");
+}
+
+async function loadPlugIns()
+{
+	var files = fs.readdirSync('PlugIns');
+
+	for (var file of files)
+	{
+		if (/\.js$/.test(file))
+		{
+			var filepath = path.join('PlugIns', file);
+			plugIns.push(filepath);
+		}
+	}
+
+	files = fs.readdirSync(userHomeDir + '/Documents/Peguy/Collider/PlugIns');
+
+	for (var file of files)
+	{
+		if (/\.js$/.test(file))
+		{
+			var filepath = path.join(userHomeDir + '/Documents/Peguy/Collider/PlugIns', file);
+			plugIns.push(filepath);
+		}
+	}
 }
 
 async function handleOpenFile()
@@ -293,6 +320,9 @@ else
 	recentFiles = JSON.parse(fileContent);
 }
 
+if (!fs.existsSync(userHomeDir + '/Documents/Peguy/Collider/PlugIns'))
+	fs.mkdirSync(userHomeDir + '/Documents/Peguy/Collider/PlugIns');
+
 // A voir si à terme je peux pas proposer un système d'import d'instruments
 /*
 if (!fs.existsSync(userHomeDir + '/Documents/Peguy/3D/vectorialAssets.json'))
@@ -303,6 +333,8 @@ else
 	vectorialAssets = JSON.parse(fileContent);
 }
 //*/
+
+loadPlugIns();
 
 // Fonction de création d'une fenêtre
 function createWindow ()

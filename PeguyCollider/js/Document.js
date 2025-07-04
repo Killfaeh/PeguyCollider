@@ -404,60 +404,6 @@ function Document()
 
 		return code;
 	};
-
-	// A remplacer pour l'export vers un fichier sonore
-	/*
-	this.getOBJdata = function()
-	{
-		var objData = { v: [], vn: [], vt: [], f: [], materials: [] };
-
-		var scene = previewPanel.getScene();
-
-		if (!utils.isset(scene))
-		{
-			execProgram();
-			scene = previewPanel.getScene();
-		}
-
-		var sceneRawData = scene.getRawData();
-
-		objData.vt = sceneRawData.vt;
-		objData.f = sceneRawData.f;
-		objData.materials = sceneRawData.materials;
-
-		var rotateMatrix = new RotateMatrix(1, 0, 0, 90.0);
-
-		var vertices = sceneRawData.v;
-		var nbVertices = vertices.length/3;
-
-		for (var j = 0; j < nbVertices; j++)
-		{
-			var x = vertices[j*3];
-			var y = vertices[j*3+1];
-			var z = vertices[j*3+2];
-			var outputVector = rotateMatrix.multiplyVect([x, y, z, 1.0]);
-			objData.v.push(outputVector[0]);
-			objData.v.push(outputVector[1]);
-			objData.v.push(outputVector[2]);
-		}
-
-		var normals = sceneRawData.vn;
-
-		for (var j = 0; j < nbVertices; j++)
-		{
-			var x = normals[j*3];
-			var y = normals[j*3+1];
-			var z = normals[j*3+2];
-			var outputVector = rotateMatrix.multiplyVect([x, y, z, 1.0]);
-			outputVector = Math.normalizeVector(outputVector);
-			objData.vn.push(outputVector[0]);
-			objData.vn.push(outputVector[1]);
-			objData.vn.push(outputVector[2]);
-		}
-
-		return objData;
-	};
-	//*/
 	
 	// SET
 	

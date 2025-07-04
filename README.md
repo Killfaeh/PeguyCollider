@@ -1,7 +1,11 @@
 # Péguy Collider
 Péguy Collider is a music procedural generation software based on [Electron](https://www.electronjs.org/), [Péguy.js](https://github.com/Killfaeh/Peguy.js) and [Tone.js](https://github.com/Tonejs/Tone.js) inspired by [SuperCollider](https://supercollider.github.io/).</br>
 
-You can use it to generate and export melodies to use them in your favorite DAW or to edit and play generated music live.
+You can use it to generate and export melodies to use them in your favorite DAW or to edit and play generated music live.</br>
+
+You can listen to 2 playlists I composed with Péguy Collider here:</br>
+[Playlist 1](https://www.suiseipark.com/Music/Playlist/name/FinnSkald/)</br>
+[Playlist 2](https://www.suiseipark.com/Music/Playlist/name/MementoMori/)
 
 ## Table of Contents
 
@@ -46,7 +50,7 @@ sudo apt install npm
 
 ### Download and extract the archive
 
-Download the project archive via this Google Drive link : [https://drive.google.com/file/d/1IxcDq3DdFZZG5lBIl68ikfSZHDzpU-xI/view?usp=sharing](https://drive.google.com/file/d/1IxcDq3DdFZZG5lBIl68ikfSZHDzpU-xI/view?usp=sharing) </br>
+Download the project archive via this Google Drive link : [https://drive.google.com/file/d/1_zfSvaIIPOUYz25anvl8Q3_6dzLkdky9/view?usp=sharing](https://drive.google.com/file/d/1_zfSvaIIPOUYz25anvl8Q3_6dzLkdky9/view?usp=sharing) </br>
 Then, extract it.
 
 <div align="center">
