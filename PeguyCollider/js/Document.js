@@ -167,6 +167,7 @@ function Document()
 		Sequence.stopLive();
 	};
 
+	/*
 	var execCode = function($code)
 	{
 		console.log($code);
@@ -184,20 +185,72 @@ function Document()
 		script = new Component('<script type="text/javascript" >var scriptToExec = function() { ' + code + '\n};\n try { scriptToExec();\nviewManager.emptyError();\nviewManager.emptyMIDI();\nviewManager.play(); }\ncatch($error) { viewManager.displayError($error); } </script>');
 		document.getElementById('main').appendChild(script);
 	};
+	//*/
 
 	var onChange = function($code)
 	{
 		$this.setSaved(false);
 	};
 
-	var execProgram = function()
+	var execProgram = async function()
 	{
 		iconsMenu.hide("run-script");
 		iconsMenu.display("stop-script");
 		iconsMenu.display("refresh-script");
 
+		viewManager.emptyError();
+		Sequence.empty();
+		viewManager.refresh();
+
+		if (utils.isset(execConfig))
+		{
+			for (var i = 0; i < execConfig.scripts.length; i++)
+				Loader.removeScript(execConfig.scripts[i].tmpFile);
+		}
+
+		var plugins = window.electronAPI.refreshPlugIns();
+
+		for (var i = 0; i < plugins.length; i++)
+		{
+			Loader.removeScript(plugins[i]);
+			Loader.addScript(plugins[i], plugins[i]);
+		}
+		
+		var tmpCode = $this.getCode();
+
+		execConfig = await window.electronAPI.execProgram(filePath, tmpCode);
+
+		if (utils.isset(execConfig))
+		{
+			for (var i = 0; i < execConfig.scripts.length; i++)
+			{
+				if (execConfig.scripts[i].name !== 'main' && execConfig.scripts[i].name !== 'main.js')
+					Loader.addScript('file://' + filePath + '/run/' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
+			}
+
+			Loader.onload = function()
+			{
+				for (var i = 0; i < execConfig.scripts.length; i++)
+				{
+					if (execConfig.scripts[i].name === 'main' || execConfig.scripts[i].name === 'main.js')
+						Loader.addScript('file://' + filePath + '/run/' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
+				}
+
+				Loader.onload = function()
+				{
+					viewManager.emptyMIDI();
+					viewManager.play();
+				};
+
+				Loader.load();
+			};
+
+			Loader.load();
+		}
+
 		//viewManager.save();
 
+		/*
 		var codeToExec = mainScriptEditor.getCode();
 
 		var tabList = tabManager.getTabList();
@@ -229,6 +282,7 @@ function Document()
 		}
 
 		execCode(codeToExec);
+		//*/
 	};
 
 	var stopProgram = function()
@@ -239,6 +293,7 @@ function Document()
 		iconsMenu.hide("refresh-script");
 	};
 
+	/*
 	var refreshCode = function($code)
 	{
 		console.log($code);
@@ -256,9 +311,56 @@ function Document()
 		script = new Component('<script type="text/javascript" >var scriptToExec = function() { ' + code + '\n};\n try { scriptToExec();\nviewManager.emptyError(); }\ncatch($error) { viewManager.displayError($error); } </script>');
 		document.getElementById('main').appendChild(script);
 	};
+	//*/
 
-	var refreshProgram = function()
+	var refreshProgram = async function()
 	{
+		viewManager.emptyError();
+		Sequence.empty();
+		viewManager.refresh();
+
+		if (utils.isset(execConfig))
+		{
+			for (var i = 0; i < execConfig.scripts.length; i++)
+				Loader.removeScript(execConfig.scripts[i].tmpFile);
+		}
+
+		var plugins = window.electronAPI.refreshPlugIns();
+
+		for (var i = 0; i < plugins.length; i++)
+		{
+			Loader.removeScript(plugins[i]);
+			Loader.addScript(plugins[i], plugins[i]);
+		}
+
+		var tmpCode = $this.getCode();
+
+		execConfig = await window.electronAPI.execProgram(filePath, tmpCode);
+
+		if (utils.isset(execConfig))
+		{
+			for (var i = 0; i < execConfig.scripts.length; i++)
+			{
+				if (execConfig.scripts[i].name !== 'main' && execConfig.scripts[i].name !== 'main.js')
+					Loader.addScript('file://' + filePath + '/run/' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
+			}
+
+			Loader.onload = function()
+			{
+				for (var i = 0; i < execConfig.scripts.length; i++)
+				{
+					if (execConfig.scripts[i].name === 'main' || execConfig.scripts[i].name === 'main.js')
+						Loader.addScript('file://' + filePath + '/run/' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
+				}
+
+				Loader.onload = function() {};
+				Loader.load();
+			};
+
+			Loader.load();
+		}
+
+		/*
 		var codeToExec = mainScriptEditor.getCode();
 
 		var tabList = tabManager.getTabList();
@@ -290,6 +392,7 @@ function Document()
 		}
 
 		refreshCode(codeToExec);
+		//*/
 	};
 
 	/*
@@ -335,11 +438,21 @@ function Document()
 		}
 	};
 
-	this.displayError = function($error)
+	this.displayError = function($message, $source, $lineno, $colno, $error)
 	{
-		console.log($error);
-		errorConsole.getById('errorConsole').innerHTML = $error.stack;
-		//stopProgram();
+		var source = $source;
+
+		if (utils.isset(execConfig))
+		{
+			for (var i = 0; i < execConfig.scripts.length; i++)
+			{
+				if ($source.indexOf(execConfig.scripts[i].tmpFile) >= 0)
+					source = execConfig.scripts[i].name;
+			}
+		}
+
+		var stack = (new Error()).stack;
+		errorConsole.getById('errorConsole').innerHTML = errorConsole.getById('errorConsole').innerHTML + $message + ' (at ' + source + '.js:' + $lineno + ':' + $colno + ')<br />';
 	};
 
 	this.emptyError = function()

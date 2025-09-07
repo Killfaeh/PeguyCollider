@@ -123,29 +123,90 @@ async function handleLoadSettingsInGUI()
 	//mainWindow.webContents.executeJavaScript("viewManager.update3dAssetManager(" + JSON.stringify(threeDAssets) + ");");
 }
 
-async function loadPlugIns()
+function loadPlugIns()
 {
+	var tmpPluginsPath = userHomeDir + '/Documents/Peguy/3D/PlugIns/tmp'; 
+
+	if (fs.existsSync(tmpPluginsPath))
+		fs.rmSync(tmpPluginsPath, { recursive: true, force: true });
+		
+	fs.mkdirSync(tmpPluginsPath);
+
+	var index = 1;
+	var timestamp = (new Date()).getTime();
+
+	plugIns = [];
+
 	var files = fs.readdirSync('PlugIns');
 
 	for (var file of files)
 	{
-		if (/\.js$/.test(file))
+		if (fs.lstatSync('PlugIns/' + file).isDirectory())
 		{
-			var filepath = path.join('PlugIns', file);
-			plugIns.push(filepath);
+			var subFiles = fs.readdirSync('PlugIns/' + file);
+
+			for (var subFile of subFiles)
+			{
+				if (subFile !== 'main.js')
+				{
+					var tmpFilePath = tmpPluginsPath + '/plugin-' + timestamp + '-' + index + '.js';
+					var filepath = __dirname + '/PlugIns/' + file + '/' + subFile;
+					var fileContent = fs.readFileSync(filepath, "utf8");
+					fs.writeFileSync(tmpFilePath, fileContent + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");');
+					plugIns.push(tmpFilePath);
+				}
+			}
 		}
+		else if (/\.js$/.test(file))
+		{
+			var tmpFilePath = tmpPluginsPath + '/plugin-' + timestamp + '-' + index + '.js';
+			var filepath = __dirname + '/' + path.join('PlugIns', file);
+			var fileContent = fs.readFileSync(filepath, "utf8");
+			fs.writeFileSync(tmpFilePath, fileContent + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");');
+			plugIns.push(tmpFilePath);
+		}
+
+		index++;
 	}
 
-	files = fs.readdirSync(userHomeDir + '/Documents/Peguy/Collider/PlugIns');
+	files = fs.readdirSync(userHomeDir + '/Documents/Peguy/3D/PlugIns');
 
 	for (var file of files)
 	{
-		if (/\.js$/.test(file))
+		if (fs.lstatSync(userHomeDir + '/Documents/Peguy/3D/PlugIns/' + file).isDirectory())
 		{
-			var filepath = path.join(userHomeDir + '/Documents/Peguy/Collider/PlugIns', file);
-			plugIns.push(filepath);
+			var subFiles = fs.readdirSync(userHomeDir + '/Documents/Peguy/3D/PlugIns/' + file);
+
+			for (var subFile of subFiles)
+			{
+				if (subFile !== 'main.js')
+				{
+					var tmpFilePath = tmpPluginsPath + '/plugin-' + timestamp + '-' + index + '.js';
+					var filepath = userHomeDir + '/Documents/Peguy/3D/PlugIns/' + file + '/' + subFile;
+					var fileContent = fs.readFileSync(filepath, "utf8");
+					fs.writeFileSync(tmpFilePath, fileContent + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");');
+					plugIns.push(tmpFilePath);
+				}
+			}
 		}
+		else if (/\.js$/.test(file))
+		{
+			var tmpFilePath = tmpPluginsPath + '/plugin-' + timestamp + '-' + index + '.js';
+			var filepath = path.join(userHomeDir + '/Documents/Peguy/3D/PlugIns', file);
+			var fileContent = fs.readFileSync(filepath, "utf8");
+			fs.writeFileSync(tmpFilePath, fileContent + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFilePath + '");');
+			plugIns.push(tmpFilePath);
+		}
+
+		index++;
 	}
+}
+
+async function handleRefreshPlugIns()
+{
+	loadPlugIns();
+	await mainWindow.webContents.executeJavaScript("viewManager.updatePlugIns(" + JSON.stringify({ plugIns: plugIns }) + ");");
+	return plugIns;
 }
 
 async function handleOpenFile()
@@ -261,6 +322,33 @@ async function handleSaveFile($event, $filePath, $content)
 	return output;
 }
 
+async function handleExecProgram($event, $filePath, $content)
+{
+	var tmp = $filePath.split('/');
+	var fileName = tmp[tmp.length-1];
+
+	if (fs.existsSync($filePath + '/run'))
+		fs.rmSync($filePath + '/run', { recursive: true, force: true });
+		
+	fs.mkdirSync($filePath + '/run');
+
+	var index = 1;
+	var timestamp = (new Date()).getTime();
+
+	var projectConfig = { projectName: fileName, scripts: [] };
+
+	for (key in $content)
+	{
+		var tmpFileName = key + '-' + timestamp + '-' + index + '.js';
+		var codeToSave = $content[key] + '\n\nif (Loader !== null && Loader !== undefined)\n\tLoader.hasLoaded("' + tmpFileName + '");';
+		projectConfig.scripts.push({ name: key, tmpFile: tmpFileName });
+		fs.writeFileSync($filePath + '/run/' + tmpFileName, codeToSave);
+		index++;
+	}
+
+	return projectConfig;
+}
+
 async function handleSaveAsMIDI($event, $projectPath, $filePath, $data)
 {
 	console.log("SAVE DATA AS MIDI : ");
@@ -366,10 +454,12 @@ app.whenReady().then(() =>
 {
 	ipcMain.on('setNotSavedFiles', handleSetNotSavedFiles);
 	ipcMain.handle('loadSettingsInGUI', handleLoadSettingsInGUI);
+	ipcMain.handle('refreshPlugIns', handleRefreshPlugIns);
 	ipcMain.handle('openFile', handleOpenFile);
 	ipcMain.handle('openRecentFile', handleOpenRecentFile);
 	ipcMain.handle('saveFileAs', handleSaveFileAs);
 	ipcMain.handle('saveFile', handleSaveFile);
+	ipcMain.handle('execProgram', handleExecProgram);
 	ipcMain.handle('saveAsMIDI', handleSaveAsMIDI);
 	ipcMain.on('quit', handleQuit);
 

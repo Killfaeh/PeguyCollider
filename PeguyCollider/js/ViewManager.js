@@ -351,10 +351,10 @@ function ViewManager()
 	this.updatePlugIns = function($plugIns)
 	{
 		for (var i = 0; i < $plugIns.plugIns.length; i++)
-		{
-			var script = utils.create("script", { "type": "text/javascript", "src": $plugIns.plugIns[i] });
-			document.getElementById('main').appendChild(script);
-		}
+			Loader.addScript($plugIns.plugIns[i], $plugIns.plugIns[i]);
+
+		Loader.onload = function() {};
+		Loader.load();
 	};
 
 	//this.updateVectorialAssetManager = function($assets) { vectorialAssetsLibrary.loadAssetList($assets); };
@@ -390,12 +390,12 @@ function ViewManager()
 			selectedTab.getContent().resize();
 	};
 
-	this.displayError = function($error)
+	this.displayError = function($message, $source, $lineno, $colno, $error)
 	{
 		var selectedTab = tabManager.getSelected();
 
 		if (utils.isset(selectedTab))
-			selectedTab.getContent().displayError($error);
+			selectedTab.getContent().displayError($message, $source, $lineno, $colno, $error);
 	};
 
 	this.emptyError = function()

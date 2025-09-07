@@ -102,6 +102,7 @@
 				}
 			};
 
+			var execConfig = null;
 			var appData;
 			var viewManager;
 			var notifCenter;
@@ -183,8 +184,8 @@
 				
 				Debug.onError = function($message, $source, $lineno, $colno, $error)
 				{
-					//cancelSave3D();
-					
+					if (viewManager)
+						viewManager.displayError($message, $source, $lineno, $colno, $error);
 				};
 				
 				viewManager = new ViewManager();
