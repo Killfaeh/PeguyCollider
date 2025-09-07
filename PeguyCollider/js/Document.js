@@ -225,7 +225,8 @@ function Document()
 			for (var i = 0; i < execConfig.scripts.length; i++)
 			{
 				if (execConfig.scripts[i].name !== 'main' && execConfig.scripts[i].name !== 'main.js')
-					Loader.addScript('file://' + filePath + '/run/' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
+					Loader.addScript('file://' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
+					//Loader.addScript('file://' + filePath + '/run/' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
 			}
 
 			Loader.onload = function()
@@ -233,7 +234,8 @@ function Document()
 				for (var i = 0; i < execConfig.scripts.length; i++)
 				{
 					if (execConfig.scripts[i].name === 'main' || execConfig.scripts[i].name === 'main.js')
-						Loader.addScript('file://' + filePath + '/run/' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
+						Loader.addScript('file://' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
+						//Loader.addScript('file://' + filePath + '/run/' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
 				}
 
 				Loader.onload = function()
@@ -342,7 +344,8 @@ function Document()
 			for (var i = 0; i < execConfig.scripts.length; i++)
 			{
 				if (execConfig.scripts[i].name !== 'main' && execConfig.scripts[i].name !== 'main.js')
-					Loader.addScript('file://' + filePath + '/run/' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
+					Loader.addScript('file://' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
+					//Loader.addScript('file://' + filePath + '/run/' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
 			}
 
 			Loader.onload = function()
@@ -350,7 +353,8 @@ function Document()
 				for (var i = 0; i < execConfig.scripts.length; i++)
 				{
 					if (execConfig.scripts[i].name === 'main' || execConfig.scripts[i].name === 'main.js')
-						Loader.addScript('file://' + filePath + '/run/' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
+						Loader.addScript('file://' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
+						//Loader.addScript('file://' + filePath + '/run/' + execConfig.scripts[i].tmpFile, execConfig.scripts[i].tmpFile);
 				}
 
 				Loader.onload = function() {};
