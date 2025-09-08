@@ -106,17 +106,13 @@ Double click on the label or simple click on the copy/paste icon of the row whic
 To add a script in your project, you have to click on the add file icon on the left top, near the double arrow. </br>
 Then, enter a name and click on the Ok button.</br>
 
-A common use of the multiscript approach is to create all instruments used in the project and store them appart.</br>
-
 <div align="center">
 <img src="./doc/03-addScript.png">
 </div></br>
 
-Then, to use others scripts in the project call them with the instruction loadScript('name-of-the-script'); for each additional script in the main script.</br>
+Since scripts other than main.js may be executed in random order, it is recommended that you do not execute any functions in them and only write variable and function declarations. The execution of functions must be done in main.js, which runs after all other scripts.<br/>
 
-<div align="center">
-<img src="./doc/04-loadScript.png">
-</div></br>
+A common use of the multiscript approach is to create all instruments used in the project and store them appart.<br/>
 
 ### Export to MIDI and other DAW
 
