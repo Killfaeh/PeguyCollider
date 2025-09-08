@@ -110,7 +110,7 @@ Then, enter a name and click on the Ok button.</br>
 <img src="./doc/03-addScript.png">
 </div></br>
 
-Since scripts other than main.js may be executed in random order, it is recommended that you do not execute any functions in them and only write variable and function declarations. The execution of functions must be done in main.js, which runs after all other scripts.<br/>
+Since scripts other than <i>main.js</i> may be executed in random order, it is recommended that you do not execute any functions in them and only write variable and function declarations. The execution of functions must be done in main.js, which runs after all other scripts.<br/>
 
 A common use of the multiscript approach is to create all instruments used in the project and store them appart.<br/>
 
